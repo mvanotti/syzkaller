@@ -78,7 +78,7 @@ Then run FIDL compiler backend `fidlgen` with syzkaller generator, which compile
 To run `syz-ci` locally for Fuchsia, you need:
 
 - Go 1.10 toolchain (in `/go1.10` dir in the example below)
-- bootstrapped Fuchsia checkout (in `/bootstrap/fuchsia` dir in the example below)
+- bootstrapped Fuchsia checkout (in `/bootstrap/fuchsia` dir in the example below, needs to be built for both `x64` and `arm64`)
 - bootstrap `syz-ci` binary (in the current dir, build with `make ci`)
 - `syz-ci` config similar to the one below (in `ci.cfg` file in the current dir)
 
