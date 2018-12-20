@@ -49,10 +49,12 @@ func NewEnv(cfg *mgrconfig.Config) (*Env, error) {
 	env := &Env{
 		cfg: cfg,
 	}
+	log.Logf(0, "Created cfg: %v", cfg)
 	return env, nil
 }
 
 func (env *Env) BuildSyzkaller(repo, commit string) error {
+	log.Logf(0, "BuildSyzkaller repo %q, commit %q", repo, commit)
 	cfg := env.cfg
 	srcIndex := strings.LastIndex(cfg.Syzkaller, "/src/")
 	if srcIndex == -1 {
@@ -77,6 +79,7 @@ func (env *Env) BuildSyzkaller(repo, commit string) error {
 }
 
 func (env *Env) BuildKernel(compilerBin, userspaceDir, cmdlineFile, sysctlFile string, kernelConfig []byte) error {
+	log.Logf(0, "BuildKernel compilerBin %q, userspaceDir %q cmdlineFile %q sysctlFile %q", compilerBin, userspaceDir, cmdlineFile, sysctlFile)
 	cfg := env.cfg
 	imageDir := filepath.Join(cfg.Workdir, "image")
 	if err := build.Image(cfg.TargetOS, cfg.TargetVMArch, cfg.Type,
@@ -146,13 +149,16 @@ func (err *CrashError) Error() string {
 // TestError is returned if there is a problem with kernel/image (crash, reboot loop, etc).
 // CrashError is returned if the reproducer crashes kernel.
 func (env *Env) Test(numVMs int, reproSyz, reproOpts, reproC []byte) ([]error, error) {
+	log.Logf(0, "env.Test numVMs %d reproSyz %q reproOpts %q reproC %q", numVMs, string(reproSyz), string(reproOpts), string(reproC))
 	if err := mgrconfig.Complete(env.cfg); err != nil {
 		return nil, err
 	}
+	log.Logf(0, "env.Test mgrconfig.Complete(%v)", env.cfg)
 	reporter, err := report.NewReporter(env.cfg)
 	if err != nil {
 		return nil, err
 	}
+	log.Logf(0, "env.Test vm.Create", env.cfg)
 	vmPool, err := vm.Create(env.cfg, false)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create VM pool: %v", err)
@@ -192,8 +198,10 @@ type inst struct {
 }
 
 func (inst *inst) test() error {
+	log.Logf(0, "vm[%d]: test", inst.vmIndex)
 	vmInst, err := inst.vmPool.Create(inst.vmIndex)
 	if err != nil {
+		log.Logf(0, "vm[%d]: FAIL on vmPool.Create: %v", inst.vmIndex, err)
 		testErr := &TestError{
 			Boot:  true,
 			Title: err.Error(),

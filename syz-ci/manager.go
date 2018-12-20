@@ -360,10 +360,12 @@ func (mgr *Manager) testImage(imageDir string, info *BuildInfo) error {
 	if err != nil {
 		return fmt.Errorf("failed to create manager config: %v", err)
 	}
+	log.Logf(0, "%v: config created", mgr.name)
 	defer os.RemoveAll(mgrcfg.Workdir)
 	if !vm.AllowsOvercommit(mgrcfg.Type) {
 		return nil // No support for creating machines out of thin air.
 	}
+	log.Logf(0, "%v: instance.NewEnv", mgr.name)
 	env, err := instance.NewEnv(mgrcfg)
 	if err != nil {
 		return err
@@ -372,6 +374,7 @@ func (mgr *Manager) testImage(imageDir string, info *BuildInfo) error {
 		testVMs     = 3
 		maxFailures = 1
 	)
+	log.Logf(0, "%v: env.Test", mgr.name)
 	results, err := env.Test(testVMs, nil, nil, nil)
 	if err != nil {
 		return err
