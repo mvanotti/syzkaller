@@ -222,7 +222,7 @@ fuchsia_mediacodec_DomainFormatInLine [
 ]
 
 fuchsia_mediacodec_CodecEnableOnStreamFailedRequest {
-	hdr	fidl_message_header[1]
+	hdr	fidl_message_header[1711095542]
 } [packed]
 
 fuchsia_mediacodec_CodecEnableOnStreamFailedRequestHandles {
@@ -238,7 +238,7 @@ fuchsia_mediacodec_CodecOnInputConstraintsEventHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecSetInputBufferSettingsRequest {
-	hdr			fidl_message_header[4]
+	hdr			fidl_message_header[1717324185]
 	input_settingsInLine	fuchsia_mediacodec_CodecPortBufferSettingsInLine
 	input_settingsOutOfLine	fuchsia_mediacodec_CodecPortBufferSettingsOutOfLine
 } [packed]
@@ -248,7 +248,7 @@ fuchsia_mediacodec_CodecSetInputBufferSettingsRequestHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecAddInputBufferRequest {
-	hdr		fidl_message_header[5]
+	hdr		fidl_message_header[952033239]
 	bufferInLine	fuchsia_mediacodec_CodecBufferInLine
 	bufferOutOfLine	fuchsia_mediacodec_CodecBufferOutOfLine
 } [packed]
@@ -262,7 +262,7 @@ fuchsia_mediacodec_CodecOnOutputConfigEventHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecSetOutputBufferSettingsRequest {
-	hdr				fidl_message_header[7]
+	hdr				fidl_message_header[262079268]
 	output_settingsInLine		fuchsia_mediacodec_CodecPortBufferSettingsInLine
 	output_settingsOutOfLine	fuchsia_mediacodec_CodecPortBufferSettingsOutOfLine
 } [packed]
@@ -272,7 +272,7 @@ fuchsia_mediacodec_CodecSetOutputBufferSettingsRequestHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecAddOutputBufferRequest {
-	hdr		fidl_message_header[8]
+	hdr		fidl_message_header[1745253039]
 	bufferInLine	fuchsia_mediacodec_CodecBufferInLine
 	bufferOutOfLine	fuchsia_mediacodec_CodecBufferOutOfLine
 } [packed]
@@ -282,7 +282,7 @@ fuchsia_mediacodec_CodecAddOutputBufferRequestHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecFlushEndOfStreamAndCloseStreamRequest {
-	hdr			fidl_message_header[9]
+	hdr			fidl_message_header[1466726684]
 	stream_lifetime_ordinal	int64
 } [packed]
 
@@ -291,7 +291,7 @@ fuchsia_mediacodec_CodecFlushEndOfStreamAndCloseStreamRequestHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecCloseCurrentStreamRequest {
-	hdr			fidl_message_header[10]
+	hdr			fidl_message_header[1651652242]
 	stream_lifetime_ordinal	int64
 	release_input_buffers	int8
 	release_output_buffers	int8
@@ -302,7 +302,7 @@ fuchsia_mediacodec_CodecCloseCurrentStreamRequestHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecSyncRequest {
-	hdr	fidl_message_header[11]
+	hdr	fidl_message_header[802252701]
 } [packed]
 
 fuchsia_mediacodec_CodecSyncRequestHandles {
@@ -318,7 +318,7 @@ fuchsia_mediacodec_CodecOnOutputPacketEventHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecRecycleOutputPacketRequest {
-	hdr					fidl_message_header[13]
+	hdr					fidl_message_header[300979838]
 	available_output_packetInLine		fuchsia_mediacodec_CodecPacketHeaderInLine
 	available_output_packetOutOfLine	fuchsia_mediacodec_CodecPacketHeaderOutOfLine
 } [packed]
@@ -332,7 +332,7 @@ fuchsia_mediacodec_CodecOnOutputEndOfStreamEventHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecQueueInputFormatDetailsRequest {
-	hdr			fidl_message_header[15]
+	hdr			fidl_message_header[25049358]
 	stream_lifetime_ordinal	int64
 	format_detailsInLine	fuchsia_mediacodec_CodecFormatDetailsInLine
 	format_detailsOutOfLine	fuchsia_mediacodec_CodecFormatDetailsOutOfLine
@@ -343,7 +343,7 @@ fuchsia_mediacodec_CodecQueueInputFormatDetailsRequestHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecQueueInputPacketRequest {
-	hdr		fidl_message_header[16]
+	hdr		fidl_message_header[1273368661]
 	packetInLine	fuchsia_mediacodec_CodecPacketInLine
 	packetOutOfLine	fuchsia_mediacodec_CodecPacketOutOfLine
 } [packed]
@@ -357,7 +357,7 @@ fuchsia_mediacodec_CodecOnFreeInputPacketEventHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecQueueInputEndOfStreamRequest {
-	hdr			fidl_message_header[18]
+	hdr			fidl_message_header[174219229]
 	stream_lifetime_ordinal	int64
 } [packed]
 
@@ -394,7 +394,7 @@ fuchsia_mediacodec_CodecFactoryOnCodecListEventHandles {
 } [packed]
 
 fuchsia_mediacodec_CodecFactoryCreateDecoderRequest {
-	hdr			fidl_message_header[2]
+	hdr			fidl_message_header[2079109589]
 	decoder_paramsInLine	fuchsia_mediacodec_CreateDecoder_ParamsInLine
 	decoder			flags[fidl_handle_presence, int32]
 	decoder_paramsOutOfLine	fuchsia_mediacodec_CreateDecoder_ParamsOutOfLine

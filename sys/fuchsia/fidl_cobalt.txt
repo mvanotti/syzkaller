@@ -97,6 +97,68 @@ fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleResponseHandles {
 	void	void
 } [packed]
 
+fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectNameRequest {
+	hdr			fidl_message_header[3]
+	project_nameInLine	fidl_string
+	release_stage		flags[fuchsia_cobalt_ReleaseStage, int32]
+	logger			flags[fidl_handle_presence, int32]
+	project_nameOutOfLine	fidl_aligned[stringnoz]
+} [packed]
+
+fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectNameRequestHandles {
+	logger	zx_chan_fuchsia_cobalt_Logger_server
+} [packed]
+
+fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectNameResponseHandles {
+	void	void
+} [packed]
+
+fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectNameRequest {
+	hdr			fidl_message_header[4]
+	project_nameInLine	fidl_string
+	release_stage		flags[fuchsia_cobalt_ReleaseStage, int32]
+	logger			flags[fidl_handle_presence, int32]
+	project_nameOutOfLine	fidl_aligned[stringnoz]
+} [packed]
+
+fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectNameRequestHandles {
+	logger	zx_chan_fuchsia_cobalt_LoggerSimple_server
+} [packed]
+
+fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectNameResponseHandles {
+	void	void
+} [packed]
+
+fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectIdRequest {
+	hdr		fidl_message_header[5]
+	project_id	int32
+	release_stage	flags[fuchsia_cobalt_ReleaseStage, int32]
+	logger		flags[fidl_handle_presence, int32]
+} [packed]
+
+fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectIdRequestHandles {
+	logger	zx_chan_fuchsia_cobalt_Logger_server
+} [packed]
+
+fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectIdResponseHandles {
+	void	void
+} [packed]
+
+fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectIdRequest {
+	hdr		fidl_message_header[6]
+	project_id	int32
+	release_stage	flags[fuchsia_cobalt_ReleaseStage, int32]
+	logger		flags[fidl_handle_presence, int32]
+} [packed]
+
+fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectIdRequestHandles {
+	logger	zx_chan_fuchsia_cobalt_LoggerSimple_server
+} [packed]
+
+fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectIdResponseHandles {
+	void	void
+} [packed]
+
 resource zx_chan_fuchsia_cobalt_LoggerFactory_client[zx_chan]
 resource zx_chan_fuchsia_cobalt_LoggerFactory_server[zx_chan]
 
@@ -104,11 +166,15 @@ zx_channel_create$fuchsia_cobalt_LoggerFactory(options const[0], out0 ptr[out, z
 fdio_service_connect$fuchsia_cobalt_LoggerFactory(path ptr[in, string["/svc/fuchsia.cobalt.LoggerFactory"]], handle zx_chan_fuchsia_cobalt_LoggerFactory_server)
 zx_channel_call$fuchsia_cobalt_LoggerFactoryCreateLogger(handle zx_chan_fuchsia_cobalt_LoggerFactory_client, options const[0], deadline zx_time, args ptr[in, fidl_call_args[fuchsia_cobalt_LoggerFactoryCreateLoggerRequest, fuchsia_cobalt_LoggerFactoryCreateLoggerRequestHandles, array[int8, ZX_CHANNEL_MAX_MSG_BYTES], fuchsia_cobalt_LoggerFactoryCreateLoggerResponseHandles]], actual_bytes ptr[out, int32], actual_handles ptr[out, int32])
 zx_channel_call$fuchsia_cobalt_LoggerFactoryCreateLoggerSimple(handle zx_chan_fuchsia_cobalt_LoggerFactory_client, options const[0], deadline zx_time, args ptr[in, fidl_call_args[fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleRequest, fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleRequestHandles, array[int8, ZX_CHANNEL_MAX_MSG_BYTES], fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleResponseHandles]], actual_bytes ptr[out, int32], actual_handles ptr[out, int32])
+zx_channel_call$fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectName(handle zx_chan_fuchsia_cobalt_LoggerFactory_client, options const[0], deadline zx_time, args ptr[in, fidl_call_args[fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectNameRequest, fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectNameRequestHandles, array[int8, ZX_CHANNEL_MAX_MSG_BYTES], fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectNameResponseHandles]], actual_bytes ptr[out, int32], actual_handles ptr[out, int32])
+zx_channel_call$fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectName(handle zx_chan_fuchsia_cobalt_LoggerFactory_client, options const[0], deadline zx_time, args ptr[in, fidl_call_args[fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectNameRequest, fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectNameRequestHandles, array[int8, ZX_CHANNEL_MAX_MSG_BYTES], fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectNameResponseHandles]], actual_bytes ptr[out, int32], actual_handles ptr[out, int32])
+zx_channel_call$fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectId(handle zx_chan_fuchsia_cobalt_LoggerFactory_client, options const[0], deadline zx_time, args ptr[in, fidl_call_args[fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectIdRequest, fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectIdRequestHandles, array[int8, ZX_CHANNEL_MAX_MSG_BYTES], fuchsia_cobalt_LoggerFactoryCreateLoggerFromProjectIdResponseHandles]], actual_bytes ptr[out, int32], actual_handles ptr[out, int32])
+zx_channel_call$fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectId(handle zx_chan_fuchsia_cobalt_LoggerFactory_client, options const[0], deadline zx_time, args ptr[in, fidl_call_args[fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectIdRequest, fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectIdRequestHandles, array[int8, ZX_CHANNEL_MAX_MSG_BYTES], fuchsia_cobalt_LoggerFactoryCreateLoggerSimpleFromProjectIdResponseHandles]], actual_bytes ptr[out, int32], actual_handles ptr[out, int32])
 
 fuchsia_cobalt_LoggerBaseLogEventRequest {
-	hdr			fidl_message_header[1]
-	metric_id		int32
-	event_type_index	int32
+	hdr		fidl_message_header[1]
+	metric_id	int32
+	event_code	int32
 } [packed]
 
 fuchsia_cobalt_LoggerBaseLogEventRequestHandles {
@@ -122,7 +188,7 @@ fuchsia_cobalt_LoggerBaseLogEventResponseHandles {
 fuchsia_cobalt_LoggerBaseLogEventCountRequest {
 	hdr			fidl_message_header[2]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	period_duration_micros	int64
 	count			int64
@@ -140,7 +206,7 @@ fuchsia_cobalt_LoggerBaseLogEventCountResponseHandles {
 fuchsia_cobalt_LoggerBaseLogElapsedTimeRequest {
 	hdr			fidl_message_header[3]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	elapsed_micros		int64
 	componentOutOfLine	fidl_aligned[stringnoz]
@@ -157,7 +223,7 @@ fuchsia_cobalt_LoggerBaseLogElapsedTimeResponseHandles {
 fuchsia_cobalt_LoggerBaseLogFrameRateRequest {
 	hdr			fidl_message_header[4]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	fps			int32
 	componentOutOfLine	fidl_aligned[stringnoz]
@@ -174,7 +240,7 @@ fuchsia_cobalt_LoggerBaseLogFrameRateResponseHandles {
 fuchsia_cobalt_LoggerBaseLogMemoryUsageRequest {
 	hdr			fidl_message_header[5]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	bytes			int64
 	componentOutOfLine	fidl_aligned[stringnoz]
@@ -206,7 +272,7 @@ fuchsia_cobalt_LoggerBaseLogStringResponseHandles {
 fuchsia_cobalt_LoggerBaseStartTimerRequest {
 	hdr			fidl_message_header[7]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	timer_idInLine		fidl_string
 	timestamp		int64
@@ -254,9 +320,9 @@ zx_channel_call$fuchsia_cobalt_LoggerBaseStartTimer(handle zx_chan_fuchsia_cobal
 zx_channel_call$fuchsia_cobalt_LoggerBaseEndTimer(handle zx_chan_fuchsia_cobalt_LoggerBase_client, options const[0], deadline zx_time, args ptr[in, fidl_call_args[fuchsia_cobalt_LoggerBaseEndTimerRequest, fuchsia_cobalt_LoggerBaseEndTimerRequestHandles, array[int8, ZX_CHANNEL_MAX_MSG_BYTES], fuchsia_cobalt_LoggerBaseEndTimerResponseHandles]], actual_bytes ptr[out, int32], actual_handles ptr[out, int32])
 
 fuchsia_cobalt_LoggerLogEventRequest {
-	hdr			fidl_message_header[1]
-	metric_id		int32
-	event_type_index	int32
+	hdr		fidl_message_header[1]
+	metric_id	int32
+	event_code	int32
 } [packed]
 
 fuchsia_cobalt_LoggerLogEventRequestHandles {
@@ -270,7 +336,7 @@ fuchsia_cobalt_LoggerLogEventResponseHandles {
 fuchsia_cobalt_LoggerLogEventCountRequest {
 	hdr			fidl_message_header[2]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	period_duration_micros	int64
 	count			int64
@@ -288,7 +354,7 @@ fuchsia_cobalt_LoggerLogEventCountResponseHandles {
 fuchsia_cobalt_LoggerLogElapsedTimeRequest {
 	hdr			fidl_message_header[3]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	elapsed_micros		int64
 	componentOutOfLine	fidl_aligned[stringnoz]
@@ -305,7 +371,7 @@ fuchsia_cobalt_LoggerLogElapsedTimeResponseHandles {
 fuchsia_cobalt_LoggerLogFrameRateRequest {
 	hdr			fidl_message_header[4]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	fps			int32
 	componentOutOfLine	fidl_aligned[stringnoz]
@@ -322,7 +388,7 @@ fuchsia_cobalt_LoggerLogFrameRateResponseHandles {
 fuchsia_cobalt_LoggerLogMemoryUsageRequest {
 	hdr			fidl_message_header[5]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	bytes			int64
 	componentOutOfLine	fidl_aligned[stringnoz]
@@ -354,7 +420,7 @@ fuchsia_cobalt_LoggerLogStringResponseHandles {
 fuchsia_cobalt_LoggerStartTimerRequest {
 	hdr			fidl_message_header[7]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	timer_idInLine		fidl_string
 	timestamp		int64
@@ -390,7 +456,7 @@ fuchsia_cobalt_LoggerEndTimerResponseHandles {
 fuchsia_cobalt_LoggerLogIntHistogramRequest {
 	hdr			fidl_message_header[100]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	histogramInLine		fidl_vector
 	componentOutOfLine	fidl_aligned[stringnoz]
@@ -437,9 +503,9 @@ zx_channel_call$fuchsia_cobalt_LoggerLogIntHistogram(handle zx_chan_fuchsia_coba
 zx_channel_call$fuchsia_cobalt_LoggerLogCustomEvent(handle zx_chan_fuchsia_cobalt_Logger_client, options const[0], deadline zx_time, args ptr[in, fidl_call_args[fuchsia_cobalt_LoggerLogCustomEventRequest, fuchsia_cobalt_LoggerLogCustomEventRequestHandles, array[int8, ZX_CHANNEL_MAX_MSG_BYTES], fuchsia_cobalt_LoggerLogCustomEventResponseHandles]], actual_bytes ptr[out, int32], actual_handles ptr[out, int32])
 
 fuchsia_cobalt_LoggerSimpleLogEventRequest {
-	hdr			fidl_message_header[1]
-	metric_id		int32
-	event_type_index	int32
+	hdr		fidl_message_header[1]
+	metric_id	int32
+	event_code	int32
 } [packed]
 
 fuchsia_cobalt_LoggerSimpleLogEventRequestHandles {
@@ -453,7 +519,7 @@ fuchsia_cobalt_LoggerSimpleLogEventResponseHandles {
 fuchsia_cobalt_LoggerSimpleLogEventCountRequest {
 	hdr			fidl_message_header[2]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	period_duration_micros	int64
 	count			int64
@@ -471,7 +537,7 @@ fuchsia_cobalt_LoggerSimpleLogEventCountResponseHandles {
 fuchsia_cobalt_LoggerSimpleLogElapsedTimeRequest {
 	hdr			fidl_message_header[3]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	elapsed_micros		int64
 	componentOutOfLine	fidl_aligned[stringnoz]
@@ -488,7 +554,7 @@ fuchsia_cobalt_LoggerSimpleLogElapsedTimeResponseHandles {
 fuchsia_cobalt_LoggerSimpleLogFrameRateRequest {
 	hdr			fidl_message_header[4]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	fps			int32
 	componentOutOfLine	fidl_aligned[stringnoz]
@@ -505,7 +571,7 @@ fuchsia_cobalt_LoggerSimpleLogFrameRateResponseHandles {
 fuchsia_cobalt_LoggerSimpleLogMemoryUsageRequest {
 	hdr			fidl_message_header[5]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	bytes			int64
 	componentOutOfLine	fidl_aligned[stringnoz]
@@ -537,7 +603,7 @@ fuchsia_cobalt_LoggerSimpleLogStringResponseHandles {
 fuchsia_cobalt_LoggerSimpleStartTimerRequest {
 	hdr			fidl_message_header[7]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	timer_idInLine		fidl_string
 	timestamp		int64
@@ -573,7 +639,7 @@ fuchsia_cobalt_LoggerSimpleEndTimerResponseHandles {
 fuchsia_cobalt_LoggerSimpleLogIntHistogramRequest {
 	hdr			fidl_message_header[100]
 	metric_id		int32
-	event_type_index	int32
+	event_code		int32
 	componentInLine		fidl_string
 	bucket_indicesInLine	fidl_vector
 	bucket_countsInLine	fidl_vector
