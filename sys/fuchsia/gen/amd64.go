@@ -3862,15 +3862,17 @@ var structDescs_amd64 = []*KeyedStruct{
 	{Key: StructKey{Name: "fuchsia_net_stack_InterfaceAddressHandles", Dir: 1}, Desc: &StructDesc{TypeCommon: TypeCommon{TypeName: "fuchsia_net_stack_InterfaceAddressHandles", ArgDir: 1}, Fields: []Type{
 		&BufferType{TypeCommon: TypeCommon{TypeName: "void", FldName: "void", ArgDir: 1}, Kind: 1},
 	}}},
-	{Key: StructKey{Name: "fuchsia_net_stack_InterfaceAddressInLine"}, Desc: &StructDesc{TypeCommon: TypeCommon{TypeName: "fuchsia_net_stack_InterfaceAddressInLine", TypeSize: 41}, Fields: []Type{
+	{Key: StructKey{Name: "fuchsia_net_stack_InterfaceAddressInLine"}, Desc: &StructDesc{TypeCommon: TypeCommon{TypeName: "fuchsia_net_stack_InterfaceAddressInLine", TypeSize: 21}, Fields: []Type{
 		&UnionType{Key: StructKey{Name: "fuchsia_net_IpAddressInLine"}, FldName: "ip_addressInLine"},
 		&IntType{IntTypeCommon: IntTypeCommon{TypeCommon: TypeCommon{TypeName: "int8", FldName: "prefix_len", TypeSize: 1}}},
-		&UnionType{Key: StructKey{Name: "fuchsia_net_IpAddressInLine"}, FldName: "peer_addressInLine"},
 	}}},
 	{Key: StructKey{Name: "fuchsia_net_stack_InterfaceAddressOutOfLine"}, Desc: &StructDesc{TypeCommon: TypeCommon{TypeName: "fuchsia_net_stack_InterfaceAddressOutOfLine"}, Fields: []Type{
 		&BufferType{TypeCommon: TypeCommon{TypeName: "void", FldName: "void"}, Kind: 1},
 	}}},
 	{Key: StructKey{Name: "fuchsia_net_stack_InterfaceInfoHandles", Dir: 1}, Desc: &StructDesc{TypeCommon: TypeCommon{TypeName: "fuchsia_net_stack_InterfaceInfoHandles", ArgDir: 1}, Fields: []Type{
+		&StructType{Key: StructKey{Name: "fuchsia_net_stack_InterfacePropertiesHandles", Dir: 1}, FldName: "properties"},
+	}}},
+	{Key: StructKey{Name: "fuchsia_net_stack_InterfacePropertiesHandles", Dir: 1}, Desc: &StructDesc{TypeCommon: TypeCommon{TypeName: "fuchsia_net_stack_InterfacePropertiesHandles", ArgDir: 1}, Fields: []Type{
 		&StructType{Key: StructKey{Name: "zircon_ethernet_MacAddressHandles", Dir: 1}, FldName: "mac"},
 		&ArrayType{TypeCommon: TypeCommon{TypeName: "array", FldName: "addresses", ArgDir: 1}, Type: &StructType{Key: StructKey{Name: "fuchsia_net_stack_InterfaceAddressHandles", Dir: 1}}},
 	}}},
@@ -3900,7 +3902,7 @@ var structDescs_amd64 = []*KeyedStruct{
 	{Key: StructKey{Name: "fuchsia_net_stack_StackAddForwardingEntryResponseHandles", Dir: 1}, Desc: &StructDesc{TypeCommon: TypeCommon{TypeName: "fuchsia_net_stack_StackAddForwardingEntryResponseHandles", ArgDir: 1}, Fields: []Type{
 		&StructType{Key: StructKey{Name: "fuchsia_net_stack_ErrorHandles", Dir: 1}, FldName: "err"},
 	}}},
-	{Key: StructKey{Name: "fuchsia_net_stack_StackAddInterfaceAddressRequest"}, Desc: &StructDesc{TypeCommon: TypeCommon{TypeName: "fuchsia_net_stack_StackAddInterfaceAddressRequest", TypeSize: 65}, Fields: []Type{
+	{Key: StructKey{Name: "fuchsia_net_stack_StackAddInterfaceAddressRequest"}, Desc: &StructDesc{TypeCommon: TypeCommon{TypeName: "fuchsia_net_stack_StackAddInterfaceAddressRequest", TypeSize: 45}, Fields: []Type{
 		&StructType{Key: StructKey{Name: "fidl_message_header[503331302]"}, FldName: "hdr"},
 		&IntType{IntTypeCommon: IntTypeCommon{TypeCommon: TypeCommon{TypeName: "int64", FldName: "id", TypeSize: 8}}},
 		&StructType{Key: StructKey{Name: "fuchsia_net_stack_InterfaceAddressInLine"}, FldName: "addrInLine"},
@@ -7478,4 +7480,4 @@ var consts_amd64 = []ConstValue{
 	{Name: "fuchsia_power_Status_OK"},
 }
 
-const revision_amd64 = "8a7252b053d5de0d3bd88529d9e94da4f660b519"
+const revision_amd64 = "406d49ec4e065e1f98035118dfc551ff1c00fa74"

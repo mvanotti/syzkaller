@@ -8,7 +8,6 @@ include <fuchsia/net/stack/c/fidl.h>
 fuchsia_net_stack_InterfaceAddressInLine {
 	ip_addressInLine	fuchsia_net_IpAddressInLine
 	prefix_len		int8
-	peer_addressInLine	fuchsia_net_IpAddressInLine
 } [packed]
 
 fuchsia_net_stack_InterfaceAddressOutOfLine {
@@ -20,6 +19,10 @@ fuchsia_net_stack_InterfaceAddressHandles {
 } [packed]
 
 fuchsia_net_stack_InterfaceInfoHandles {
+	properties	fuchsia_net_stack_InterfacePropertiesHandles
+} [packed]
+
+fuchsia_net_stack_InterfacePropertiesHandles {
 	mac		zircon_ethernet_MacAddressHandles
 	addresses	array[fuchsia_net_stack_InterfaceAddressHandles]
 } [packed]
