@@ -23,19 +23,18 @@ func (fu fuchsia) build(targetArch, vmType, kernelDir, outputDir, compiler, user
 	arch := sysTarget.KernelHeaderArch
 	product := fmt.Sprintf("%s.%s", "core", arch)
 	if _, err := osutil.RunCmd(time.Hour, kernelDir, "scripts/fx", "set", product,
-		"--args", `extra_authorized_keys_file="//.ssh/authorized_keys"`,
-		"--build-dir", "out/"+arch); err != nil {
+		"--args", `extra_authorized_keys_file="//.ssh/authorized_keys"`); err != nil {
 		return err
 	}
 	if _, err := osutil.RunCmd(time.Hour, kernelDir, "scripts/fx", "clean-build"); err != nil {
 		return err
 	}
 	for src, dst := range map[string]string{
-		"out/" + arch + "/obj/build/images/fvm.blk": "image",
-		".ssh/pkey": "key",
+		"out/default/obj/build/images/fvm.blk": "image",
+		".ssh/pkey":                            "key",
 		"out/build-zircon/kernel-" + arch + "-gcc/obj/kernel/zircon.elf": "obj/zircon.elf",
 		"out/build-zircon/multiboot.bin":                                 "kernel",
-		"out/" + arch + "/fuchsia.zbi":                                   "initrd",
+		"out/default/fuchsia.zbi":                                        "initrd",
 	} {
 		fullSrc := filepath.Join(kernelDir, filepath.FromSlash(src))
 		fullDst := filepath.Join(outputDir, filepath.FromSlash(dst))
