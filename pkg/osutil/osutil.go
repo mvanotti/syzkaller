@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -72,6 +73,10 @@ func Run(timeout time.Duration, cmd *exec.Cmd) ([]byte, error) {
 // Command is similar to os/exec.Command, but also sets PDEATHSIG on linux.
 func Command(bin string, args ...string) *exec.Cmd {
 	cmd := exec.Command(bin, args...)
+	if strings.Contains(bin, "scripts/fx") {
+		cmd.Stdout = os.Stderr
+		cmd.Stderr = os.Stderr
+	}
 	setPdeathsig(cmd)
 	return cmd
 }
