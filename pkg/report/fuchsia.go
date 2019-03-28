@@ -6,20 +6,20 @@ package report
 import (
 	"bufio"
 	"bytes"
-	"fmt"
 	"path/filepath"
 	"regexp"
-	"strconv"
 	"strings"
+	"time"
 
-	"github.com/google/syzkaller/pkg/symbolizer"
+	"github.com/google/syzkaller/pkg/log"
+	"github.com/google/syzkaller/pkg/osutil"
 	"github.com/google/syzkaller/sys/targets"
-	"github.com/ianlancetaylor/demangle"
 )
 
 type fuchsia struct {
-	obj     string
-	ignores []*regexp.Regexp
+	kernelSrc string
+	obj       string
+	ignores   []*regexp.Regexp
 }
 
 var (
@@ -42,7 +42,8 @@ var (
 func ctorFuchsia(target *targets.Target, kernelSrc, kernelObj string,
 	ignores []*regexp.Regexp) (Reporter, []string, error) {
 	ctx := &fuchsia{
-		ignores: ignores,
+		ignores:   ignores,
+		kernelSrc: kernelSrc,
 	}
 	if kernelObj != "" {
 		ctx.obj = filepath.Join(kernelObj, target.KernelObject)
@@ -87,9 +88,7 @@ func (ctx *fuchsia) shortenReport(report []byte) []byte {
 	return out.Bytes()
 }
 
-func (ctx *fuchsia) symbolize(output []byte) []byte {
-	symb := symbolizer.NewSymbolizer()
-	defer symb.Close()
+func tryReconstructLines(output []byte) []byte {
 	out := new(bytes.Buffer)
 	for s := bufio.NewScanner(bytes.NewReader(output)); s.Scan(); {
 		line := s.Bytes()
@@ -101,71 +100,31 @@ func (ctx *fuchsia) symbolize(output []byte) []byte {
 				line = append(line, s.Bytes()...)
 			}
 		}
-		if ctx.obj != "" {
-			if match := zirconRIP.FindSubmatchIndex(line); match != nil {
-				if ctx.processPC(out, symb, line, match, false) {
-					continue
-				}
-			} else if match := zirconBT.FindSubmatchIndex(line); match != nil {
-				if ctx.processPC(out, symb, line, match, true) {
-					continue
-				}
-			}
-		}
 		out.Write(line)
 		out.WriteByte('\n')
 	}
 	return out.Bytes()
 }
 
-func (ctx *fuchsia) processPC(out *bytes.Buffer, symb *symbolizer.Symbolizer,
-	line []byte, match []int, call bool) bool {
-	prefix := line[match[0]:match[1]]
-	pcStart := match[2] - match[0]
-	pcEnd := match[3] - match[0]
-	pcStr := prefix[pcStart:pcEnd]
-	pc, err := strconv.ParseUint(string(pcStr), 0, 64)
-	if err != nil {
-		return false
+func (ctx *fuchsia) symbolize(output []byte) []byte {
+	output = tryReconstructLines(output)
+	if ctx.kernelSrc == "" {
+		return output
 	}
-	shortPC := pc & 0xfffffff
-	pc = 0xffffffff80000000 | shortPC
-	if call {
-		pc--
-	}
-	frames, err := symb.Symbolize(ctx.obj, pc)
-	if err != nil || len(frames) == 0 {
-		return false
-	}
-	for _, frame := range frames {
-		file := ctx.trimFile(frame.File)
-		name := demangle.Filter(frame.Func, demangle.NoParams, demangle.NoTemplateParams)
-		if strings.Contains(name, "<lambda(") {
-			// demangle produces super long (full) names for lambdas.
-			name = "lambda"
-		}
-		id := "[ inline ]"
-		if !frame.Inline {
-			id = fmt.Sprintf("0x%08x", shortPC)
-		}
-		start := replace(append([]byte{}, prefix...), pcStart, pcEnd, []byte(id))
-		fmt.Fprintf(out, "%s %v %v:%v\n", start, name, file, frame.Line)
-	}
-	return true
-}
 
-func (ctx *fuchsia) trimFile(file string) string {
-	const (
-		prefix1 = "zircon/kernel/"
-		prefix2 = "zircon/"
-	)
-	if pos := strings.LastIndex(file, prefix1); pos != -1 {
-		return file[pos+len(prefix1):]
+	fxSymb := osutil.Command("scripts/fx", "symbolize")
+	fxSymb.Stdin = bytes.NewReader(output)
+	fxSymb.Dir = ctx.kernelSrc
+
+	symbolized, err := osutil.Run(time.Minute, fxSymb)
+	if err != nil {
+		log.Logf(0, "fx symbolize failed: %v", err)
+		// Return original un-symbolized output so people can still manually symbolize.
+		return output
 	}
-	if pos := strings.LastIndex(file, prefix2); pos != -1 {
-		return file[pos+len(prefix2):]
-	}
-	return file
+
+	symbolized = []byte(strings.ReplaceAll(string(symbolized), ctx.kernelSrc, ""))
+	return symbolized
 }
 
 func (ctx *fuchsia) Symbolize(rep *Report) error {
