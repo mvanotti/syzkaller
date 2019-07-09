@@ -79,9 +79,8 @@ type archConfig struct {
 	TargetDir string
 	NicModel  string
 	CmdLine   []string
-	// Weird mode for akaros.
-	// Currently akaros does not have support for building Go binaries.
-	// So we will run Go binaries (but not executor on host).
+	// Run go binaries on host.
+	// Workaround for Akaros and Fuchsia, that do not support building go binaries.
 	HostFuzzer bool
 }
 
@@ -164,6 +163,7 @@ var archConfigs = map[string]*archConfig{
 			"kernel.serial=legacy",
 			"kernel.halt-on-panic=true",
 		},
+		HostFuzzer: true,
 	},
 	"akaros/amd64": {
 		Qemu:       "qemu-system-x86_64",
