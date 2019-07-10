@@ -490,6 +490,8 @@ func (inst *instance) Run(timeout time.Duration, stop <-chan bool, command strin
 				args[i] = host
 			}
 		}
+
+		args = append(args, "-os=fuchsia")
 	} else {
 		args = []string{"ssh"}
 		args = append(args, sshArgs...)
