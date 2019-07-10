@@ -258,6 +258,18 @@ func isSupportedSyzkall(sandbox string, c *prog.Syscall) (bool, string) {
 		return onlySandboxNone(sandbox)
 	case "syz_execute_func":
 		return true, ""
+	case "syz_future_time":
+		return true, ""
+	case "syz_job_default":
+		return true, ""
+	case "syz_mmap":
+		return true, ""
+	case "syz_process_self":
+		return true, ""
+	case "syz_thread_self":
+		return true, ""
+	case "syz_vmar_root_self":
+		return true, ""
 	}
 	panic("unknown syzkall: " + c.Name)
 }
