@@ -270,7 +270,8 @@ func (env *Env) Exec(opts *ExecOpts, p *prog.Prog) (output []byte, info *ProgInf
 		}
 		tmpDirPath := "./"
 		if p.Target.OS == "fuchsia" {
-			tmpDirPath = "/data/"
+			// tmpDirPath = "/data/"
+			<-rateLimit.C
 		}
 		atomic.AddUint64(&env.StatRestarts, 1)
 		env.cmd, err0 = makeCommand(env.pid, env.bin, env.config, env.inFile, env.outFile, env.out, tmpDirPath)
